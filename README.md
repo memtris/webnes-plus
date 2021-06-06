@@ -50,8 +50,4 @@ This app was built during the spring PennApps 2014 hackathon by Conrad, Jared, B
 
 NEW INFORMATION:
 
-<https://critx.github.io/test1>
-
-This fork of the original WebNES, by @CritX, re-introduces audio, which broke sometime between the creation of the app and now (in iOS, todo for Android), and has optimized framerate.
-
-To be added soon is Game Genie code support, region selector (and custom framerate options), and keyboard support (with custom keybinds), in case anyone is interested in using a keyboard to play.
+This fork of the original WebNES, re-introduces audio, which broke sometime between the creation of the app and now (in iOS, todo for Android), added minor tweaks for framerate, includes Game Genie code support, and region support.
