@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html manifest="webnes.appcache">
+    <head>
+      <link href="https://fonts.googleapis.com/css2?family=Sen&display=swap" rel="stylesheet">
+        <meta charset="utf-8">
+        <title>webNES Enhanced</title>
+        <meta name="description" content="An NES emulator for everyone">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <!-- link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" !-->
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-120.png">
+        <link href="images/apple-touch-startup-image-640x1096.png"
+              media="(device-width: 320px) and (device-height: 568px)
+                 and (-webkit-device-pixel-ratio: 2)"
+              rel="apple-touch-startup-image">
+         <link href="images/apple-touch-startup-image-640x920.png"
+              media="(device-width: 320px) and (device-height: 480px)
+                 and (-webkit-device-pixel-ratio: 2)"
+              rel="apple-touch-startup-image">
+        <link href="images/apple-touch-startup-image-320x460.png"
+              media="(device-width: 320px) and (device-height: 480px)
+                 and (-webkit-device-pixel-ratio: 1)"
+              rel="apple-touch-startup-image">
+        <link href="images/apple-touch-startup-image-768x1004.png" 
+              media="(device-width: 768px) 
+                and (orientation: portrait)" 
+              rel="apple-touch-startup-image">
+        <link href="images/apple-touch-startup-image-748x1024.png" 
+              media="(device-width: 768px) 
+                and (orientation: landscape)" 
+              rel="apple-touch-startup-image">
+        <link href="images/apple-touch-startup-image-1536x2008.png" 
+              media="(device-width: 1536px) and (orientation: portrait) 
+                and (-webkit-device-pixel-ratio: 2)"
+              rel="apple-touch-startup-image">
+        <link href="images/apple-touch-startup-image-2048x1496.png" 
+              media="(device-width: 1536px)  and (orientation: landscape) 
+                and (-webkit-device-pixel-ratio: 2)" 
+              rel="apple-touch-startup-image">
+        <link rel="stylesheet" href="css/main.css" >
+        </head>
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crc-32/1.2.0/crc32.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.16.0/js/md5.min.js"></script>
+<script src="js/jquery.min.js"></script>
+        <script src="//www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="4uviau4zs2m1av1"></script>
+        <script src="js/jsnes.min.js"></script>
+        <script src="js/userAgents.js"></script>
+        <script src="js/sw.js"></script>
+        <script src="js/webnes.js"></script>
+        <div id="desktopLanding">
+          <img src="images/logo.png" alt="webNES" id="webNESLogo">
+          <p>is an NES emulator.</p>
+          <p>Currently, it is only supported for <i>mobile</i> devices.</p>
+          <p>However, if you still want to play, or if you believe you have gotten to this screen on accident, <a onclick="returnHome()">click here.</a></p>
+          <br><br>
+          <p style="">webNES was originally built at PennApps Spring 2014 by <a href="https://github.com/conradev">@conradev</a>, <a href="https://github.com/jawerty">@jawerty</a>, <a href="https://github.com/bogidon">@bogidon</a> and <a href="https://github.com/elklein96">@elklein96</a>. It was updated by <a href="https://github.com/memtris">@memtris</a>. webNES is based off of <a href="https://github.com/bfirsh/jsnes">jsNES</a>, made by <a href="https://fir.sh">@bfirsh</a>.</p>
+          <br>
+          <p><a href="https://github.com/conradev/webn.es"><i class="fa fa-github fa-3x"></i></a></p>
+          <br>
+        </div>
+                <div id="settings">
+          <button onclick="viewHome()">Go Back</button>
+          <div>
+            <br>
+            Theme: <settings id="theme">Light</settings>
+            </div>
+            <div>
+            Prevent desktop landing: <settings id="desktop">False</settings>
+          </div>
+          <div>
+            Show logs: <settings id="logEnable">False</settings>
+          </div>
+          <br>
+          <div id ="loadedGame">Currently loaded game: None</div>
+          <div>Region: NTSC</div>
+          <div>Game Genie codes (put each on a new line):<br><form><textarea id="codes" rows="10"></textarea></form></div>
+          <div><button id="saveCodes">Save codes</button></div>
+          <div id="validCodes">Loaded codes:</div>
+        </div>
+        <div id="play">
+            <canvas id="screen" width="256" height="240"></canvas>
+            <div id="portrait_controls">
+                <div id="buttons">
+                    <div id="arrow_keys">
+                    <img src="images/up_arrow.png" height=14% width=15% id="portrait_up" ontouchstart="return false;">
+                        </img>
+                        
+                        <img src="images/right_arrow.png" width=19.5% height=11% id="portrait_right" ontouchstart="return false;">
+                        </img>
+                        
+                        <img src="images/down_arrow.png" height=14% width=15% id="portrait_down" ontouchstart="return false;">
+                        </img>
+
+                        <img src="images/left_arrow.png" width=19.5% height=11% id="portrait_left" ontouchstart="return false;">
+                        </img>
+                    </div>
+
+                    <div id="portrait_settings_keys">
+                        <img id="portrait_select" height=7% width=20% src="images/select_button.png" ontouchstart="return false;">
+                        </img>
+
+                        <img id="portrait_start" height=7% width=20% src="images/start_button.png" ontouchstart="return false;">
+                        </img>
+                    </div>
+                    
+                    <div id="portrait_action_keys">
+                        <img id="portrait_B" height=11.25% width= 15% src="images/b_button.png" ontouchstart="return false;">
+    
+                        </img>
+
+                        <img id="portrait_A" height=11.25% width= 15% src="images/a_button.png" ontouchstart="return false;">
+                        </img>
+                    </div>
+                    <button id="reset">Reset</button>
+            <p id="logs"></p>
+                </div>
+            </div>
+        </div>
+        <div id="home">
+            <div id="header">
+                <img src="images/logo.png" alt="webNES">
+                <div id="addROM">
+                    <img src="images/plus.png">
+                </div>
+            </div>
+            <div id="altOptions">
+              <button onclick="viewSettings()">Settings</button>
+            </div>
+            <div id="scroll">
+                <ul></ul>
+            </div>
+        </div>
+        
+    </body>
+</html>
